@@ -99,7 +99,7 @@ body{font-family:-apple-system,"Microsoft YaHei",sans-serif;background:#f0f2f5;c
 <script>
 function esc(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
 function showLogin(){document.getElementById('login-view').classList.remove('hidden');document.getElementById('reg-view').classList.add('hidden');clearAlert()}
-function showReg(){document.getElementById('reg-view').classList.remove('hidden');document.getElementById('login-view').classList.add('hidden');clearAlert'}
+function showReg(){document.getElementById('reg-view').classList.remove('hidden');document.getElementById('login-view').classList.add('hidden');clearAlert()}
 function clearAlert(){document.getElementById('login-alert').innerHTML='';document.getElementById('reg-alert').innerHTML=''}
 
 function alertBox(id,msg,type){document.getElementById(id).innerHTML='<div class="alert '+type+'">'+esc(msg)+'</div>'}
@@ -109,7 +109,7 @@ async function register(){
   const password=document.getElementById('reg-pass').value;
   const r=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});
   const d=await r.json().catch(()=>({}));
-  if(r.ok){alertBox('reg-alert','注册成功，请登录',success');setTimeout(showLogin,1200);}
+  if(r.ok){alertBox('reg-alert','注册成功，请登录','success');setTimeout(showLogin,1200);}
   else alertBox('reg-alert',d.message||'注册失败','error');
 }
 
