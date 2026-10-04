@@ -1,10 +1,17 @@
-import { getCookie, clearSessionCookie } from '../_session.js';
+export async function onRequestPost({ request, env }) {
+  // 清除 cookie
+  return new Response(JSON.stringify({ ok: true }), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+      'Set-Cookie': 'token=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0'
+    }
+  });
+}
 
-export async function onRequestPost(context) {
-  const { env, request } = context;
-  const token = getCookie(request.headers.get('Cookie'), 'session');
-  if (token) await env.DB.prepare('DELETE FROM sessions WHERE token=?').bind(token).run();
-  return new Response(JSON.stringify({ success: true }), {
-    headers: { 'Content-Type': 'application/json', 'Set-Cookie': clearSessionCookie() }
-  };
+export async function onRequestGet() {
+  return new Response(JSON.stringify({ ok: true }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' }
+  });
 }
